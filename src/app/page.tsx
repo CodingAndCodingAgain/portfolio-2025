@@ -298,10 +298,10 @@ const PortfolioEducationInfo = () => {
           educationInfo.map(({name, grantedBy, date}, index) => 
               <ul key={name} onMouseEnter={() => setPosition(index)}>
                 <li className="fs-2">
-                  {name}
+                  <TextTypeWritter text={name} />
                   <ul>
-                    <li className="fs-3">{grantedBy}</li>
-                    <li className="fs-3">{date}</li>
+                    <li className="fs-3"><TextTypeWritter text={grantedBy} /></li>
+                    <li className="fs-3"><TextTypeWritter text={date} /></li>
                   </ul>
                 </li>
               </ul>
@@ -453,7 +453,7 @@ const splitInChunks = ({text, length} : {text: string, length: number}) => {
 
 const TextTypeWritter = ({text, duration, onComplete} : { text: string, duration?: number, onComplete?: () => void }) => {
   const textScope = useRef(null);
-  const textElements = splitInChunks({text, length: 60});
+  const textElements = splitInChunks({text, length: text.length});
 
   useGSAP(() => {
     const timeline = gsap.timeline({ defaults: { ease: "none" }});
