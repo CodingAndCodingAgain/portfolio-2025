@@ -485,10 +485,12 @@ export default function Home() {
 
   useEffect(() => {
     const url = new URL(location.href);
-    if(!url.searchParams.has("lng")){
-      i18next.changeLanguage(navigator.language);
-      url.searchParams.set("lng", navigator.language);
-      location.href = url.toString();
+    const language = navigator.language;
+    
+    if(!url.searchParams.has("lng") || url.searchParams.get("lng") !== language){
+      i18next.changeLanguage(language);
+      url.searchParams.set("lng", language);
+      location.href = url.toString(); // reload page with added flag
     }
   }, [])
   
