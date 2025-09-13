@@ -4,8 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Workbench } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: "Portfolio 2025",
-  description: "Portfolio",
+  title: "CV 2025",
 };
 
 const workbench = Workbench({
@@ -18,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={workbench.className}>
+    <html suppressHydrationWarning>
+      <body className={workbench.className} suppressHydrationWarning>
         {children}
       </body>
     </html>

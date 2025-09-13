@@ -4,14 +4,15 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import styles from "./page.module.css";
-import { Dispatch, SetStateAction, useLayoutEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { RoughEase, ScrambleTextPlugin, InertiaPlugin, Draggable } from "gsap/all";
 import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { Mesh } from "three";
 import * as THREE from 'three';
-import { Stage } from "@react-three/drei";
+import i18next from "../intl/i18n";
+import i18n from "../intl/i18n";
 
 const intlDateFormatter = new Intl.DateTimeFormat(navigator.language, {year: "numeric", month: "numeric"});
 
@@ -54,7 +55,7 @@ const InitialState = ({setAnimationCounter} : { setAnimationCounter: Dispatch<Se
       onMouseLeave={onMouseLeave} 
       onClick={onClick}
     >
-      {"ENTER"}
+      {i18next.t("enter")}
     </button>
   </div>
 
@@ -117,10 +118,10 @@ const AnimationInitialLoad = ({setAnimationCounter} : { setAnimationCounter: Dis
 const PortfolioHeader = ({onComplete}: {onComplete: () => void}) => (
     <Row className="justify-content-center text-center pt-4">
       <Col sm={9} className="d-flex justify-content-center display-4">
-        <TextTypeWritter text="[Project:PORTFOLIO:]" duration={5}/>
+        <TextTypeWritter text="[Project:CV:]" duration={2}/>
       </Col>
       <Col sm={9} className="d-flex justify-content-center display-3">
-        <TextTypeWritter text="[J_R_L]" duration={5} onComplete={onComplete}/>
+        <TextTypeWritter text="[J_R_L]" duration={2} onComplete={onComplete}/>
       </Col>
     </Row>
 );
@@ -129,22 +130,16 @@ const PortfolioProfessionalContent = () => {
   
   const info = [
     { 
-      title: "Serquo", 
-      date: `${intlDateFormatter.format(new Date("2022-03-01"))} - Current`,
-      subtitle: "Fullstack Developer", 
-      description: [
-        `Worked as part of a team on the development of the UI of a data virtualization application. My primary focus was the web interface of the product and I was involved in both frontend and backend features.`,
-        `Besides pure software development, task reviewing ( MR reviews ), task analysis and test automation were part of my daily duties.`,
-      ]
+      title: i18next.t("professional.p1.business"), 
+      date: `${intlDateFormatter.format(new Date("2022-03-01"))} - ${i18next.t("current")}`,
+      subtitle: i18next.t("professional.p1.position"), 
+      description: [ i18next.t("professional.p1.description.1"), i18next.t("professional.p1.description.2") ]
     },
     { 
-      title: "Addentra Internet",
+      title: i18next.t("professional.p2.business"),
       date: `${intlDateFormatter.format(new Date("2018-09-01"))} - ${intlDateFormatter.format(new Date("2022-01-01"))}`,
-      subtitle: "Fullstack Developer", 
-      description: [
-        `Worked as part of the development team for Klinikare, a management platform for odontologists in Spain.`,
-        `I worked on the frontend, backend and the DevOps side of the application.`,
-      ]
+      subtitle: i18next.t("professional.p2.position"), 
+      description: [ i18next.t("professional.p2.description.1"), i18next.t("professional.p2.description.2") ]
     }
   ]
 
@@ -168,8 +163,8 @@ const PortfolioProfessionalContent = () => {
 
 const PortfolioLanguageInfo = ({}) => {
   const languages = [
-    {language: "English", level: "C1", levelCounter: 6},
-    {language: "Spanish", level: "Native", levelCounter: 8},
+    {language: i18next.t("lang.english"), level: "C1", levelCounter: 6},
+    {language: i18next.t("lang.spanish"), level: i18next.t("lang.spanish.native"), levelCounter: 8},
   ]
 
   const PortfolioLanguageCubeInfo = ({language, level, levelCounter, certificationDate}: {language: string, level: string, levelCounter: number, certificationDate?: string}) => {
@@ -264,15 +259,14 @@ const PortfolioTechnicalSkillsInfo = () => {
     <Row ref={containerRef} className="p-4 justify-content-between text-center">
       <Col xs={12}>
         <Row>
-          <Col sm={4}>{"!! : Skilled"}</Col>
-          <Col sm={4}>{"! : Competent"}</Col>
-          <Col sm={4}>{"- : Basic knowledge or used in the past"}</Col>
+          {["level.competent","level.skilled","level.basicOrPrevious"]
+            .map((val, key) => <Col key={key} sm={4}>{i18next.t(val)}</Col>)}
         </Row>
       </Col>
       <Col md={7} xs={12} className="mt-4">
       {categories
         .map((category) => <Col key={category} sm={12} className="mb-4">
-          <Row className="display-4 category justify-content-center">{category}</Row>
+          <Row className="display-4 category justify-content-center">{i18next.t(category)}</Row>
           <Row className="d-flex skillContainer mt-3 justify-content-center">
             {info.get(category)?.map(({name, level}) => 
               <Col key={`${category}-${name}`} sm={6} className="fs-3 text-nowrap border border-success draggable">{`${name} ${LEVEL_INDICATORS[level]}`} </Col>)}
@@ -282,7 +276,7 @@ const PortfolioTechnicalSkillsInfo = () => {
       }
       </Col>
       <Col sm={4} className={`d-none d-md-block ${styles.portfolioTechnicalSkillsInfoSkillContainer} mt-4`}>
-        <Row className="display-6 category justify-content-center m-2">{"Drag and drop here what you need!"}</Row>
+        <Row className="display-6 category justify-content-center m-2">{i18next.t('dragAndDrop')}</Row>
       </Col>
     </Row>
   )
@@ -292,9 +286,9 @@ const PortfolioTechnicalSkillsInfo = () => {
 const PortfolioEducationInfo = () => {
   const [position, setPosition] = useState(0);
   const educationInfo = [
-    {name: "Master in Cibersecurity", grantedBy: "International University of La Rioja", date: intlDateFormatter.format(new Date("2022-10"))},
-    {name: "English C1 Degree", grantedBy: "Official School of Languages", date: intlDateFormatter.format(new Date("2022-07"))},
-    {name: "Degree in Computer Engineering", grantedBy: "University of Alcalá de Henares", date: intlDateFormatter.format(new Date("2018-09"))}
+    {name: i18next.t("edu.master"), grantedBy: i18next.t("edu.master.grantedBy"), date: intlDateFormatter.format(new Date("2022-10"))},
+    {name: i18next.t("edu.lang"), grantedBy: i18next.t("edu.lang.grantedBy"), date: intlDateFormatter.format(new Date("2022-07"))},
+    {name: i18next.t("edu.cs"), grantedBy: i18next.t("edu.cs.grantedBy"), date: intlDateFormatter.format(new Date("2018-09"))}
   ];
 
   return (
@@ -354,22 +348,21 @@ const PortfolioEducationModelMesh = ({position}: {position: number}) => {
 
     const {position: objectPosition} = objectsInScene[position];
     const {x,y,z} = objectPosition;
+    // get camera position and rotation to object
+    // the ctr-monitor is a little bit bigger so we move the
+    // camera a little bit different
     const newX = camera.position.x + (x - camera.position.x) * 0.1;  
-    camera.position.set(newX, y + (position == 2 ? 0.2 : 0), z - ( position == 2 ? 0.7 : 0.5))
+    camera.position.set(newX, y + ( position === 2 ? 0.2: 0.15), z + (position === 2 ? 0.65: 0.5))
     camera.lookAt(objectPosition)
+    camera.rotation.x = 0.1;
+    camera.rotation.y = 0.1;
   })
 
-  return <Stage preset={"portrait"}>
-    <mesh ref={mesh} >
+  return <mesh ref={mesh} >
       <primitive object={screen} />
-    </mesh>
-    <mesh>
       <primitive object={globe} />
-    </mesh>
-    <mesh>
       <primitive object={crtMonitor} />
-    </mesh>
-  </Stage>
+  </mesh>
 }
 
 const PortfolioTabs = () => {
@@ -398,16 +391,16 @@ const PortfolioTabs = () => {
         <Col sm={11} className={`${styles.tabsHeaderContainer} w-100`}>
           <Nav variant="tabs" defaultActiveKey="professional" className={styles.tabsHeader}>
             <Nav.Item ref={tabs[0]} className={styles.tabHeader} onClick={() => setTabShown1(true)}>
-              <Nav.Link eventKey="professional">Professional experience</Nav.Link>
+              <Nav.Link eventKey="professional">{i18next.t("professional.header")}</Nav.Link>
             </Nav.Item>
             <Nav.Item ref={tabs[1]} className={styles.tabHeader} onClick={() => setTabShown2(true)}>
-              <Nav.Link eventKey="edu">Education</Nav.Link>
+              <Nav.Link eventKey="edu">{i18next.t("edu.header")}</Nav.Link>
             </Nav.Item>
             <Nav.Item ref={tabs[2]} className={styles.tabHeader} onClick={() => setTabShown3(true)}>
-              <Nav.Link eventKey="lang">Language</Nav.Link>
+              <Nav.Link eventKey="lang">{i18next.t("lang.header")}</Nav.Link>
             </Nav.Item>
             <Nav.Item ref={tabs[3]} className={styles.tabHeader} onClick={() => setTabShown4(true)}>
-              <Nav.Link eventKey="tech">Technical Skills</Nav.Link>
+              <Nav.Link eventKey="tech">{i18next.t("tech.header")}</Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
@@ -416,7 +409,7 @@ const PortfolioTabs = () => {
             <Tab.Pane eventKey="professional" >
               {tabShown1 && <PortfolioProfessionalContent />}
             </Tab.Pane>
-            <Tab.Pane eventKey="edu" className="h-100">
+            <Tab.Pane eventKey="edu">
               {tabShown2 && <PortfolioEducationInfo />}
             </Tab.Pane>
             <Tab.Pane eventKey="lang" >
@@ -489,6 +482,10 @@ export default function Home() {
     <AnimationInitialLoad setAnimationCounter={setAnimationCounter}/>,
     <PortfolioInfo />
   ];
+
+  useEffect(() => {
+    i18next.changeLanguage(navigator.language)
+  }, [])
   
 
   return <div className={styles.mainPage}>{animations[animationCounter]}</div>
