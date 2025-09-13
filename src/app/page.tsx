@@ -484,7 +484,12 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    i18next.changeLanguage(navigator.language)
+    const url = new URL(location.href);
+    if(!url.searchParams.has("lng")){
+      i18next.changeLanguage(navigator.language);
+      url.searchParams.set("lng", navigator.language);
+      location.href = url.toString();
+    }
   }, [])
   
 

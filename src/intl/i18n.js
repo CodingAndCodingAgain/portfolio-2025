@@ -9,8 +9,10 @@ import { initReactI18next } from "react-i18next";
 // or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
 const resources = {
   en,
+  "en-us": en,
   "en-US": en,
   es,
+  "es-es": "es",
   "es-ES": es,
 };
 
