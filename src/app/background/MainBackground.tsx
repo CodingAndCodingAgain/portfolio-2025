@@ -10,7 +10,10 @@ interface MousePosition {
     y: number
 }
 
-const MainBackgroundGridMesh = ({mousePosition}: {mousePosition: MousePosition}) => {
+const MainBackgroundGridMesh = (
+  {mousePosition, initialAnimationFinished}: 
+  {mousePosition: MousePosition, initialAnimationFinished: boolean}
+) => {
   const grid = useLoader(OBJLoader, '/models/grid/grid.obj');
   const [opacity, setOpacity] = useState(0);
   const [opacityInc, setOpacityInc] = useState(true);
@@ -40,12 +43,14 @@ const MainBackgroundGridMesh = ({mousePosition}: {mousePosition: MousePosition})
 
 
   const setOpacities = () => {
-    if(opacity >= 1){
-        setOpacityInc(false);
-    } else if (opacity <= 0.5){
-        setOpacityInc(true);
+    if(initialAnimationFinished){
+      if(opacity >= 1){
+          setOpacityInc(false);
+      } else if (opacity <= 0.5){
+          setOpacityInc(true);
+      }
+      setOpacity(() => opacityInc ? opacity + 0.005 : opacity - 0.005);
     }
-    setOpacity(() => opacityInc ? opacity + 0.005 : opacity - 0.005);
   }
 
   useFrame(({camera}) => {
@@ -68,12 +73,15 @@ const MainBackgroundGridMesh = ({mousePosition}: {mousePosition: MousePosition})
   </mesh>
 }
 
-const MainBackground  = ({mousePosition}: {mousePosition: MousePosition}) => {
+const MainBackground  = (
+  {mousePosition, initialAnimationFinished}: 
+  {mousePosition: MousePosition, initialAnimationFinished: boolean}
+) => {
     
     return <div className={styles.mainBackground}>
         <div className={styles.mainBackgroundMeshContainer} >
             <Canvas>
-                <MainBackgroundGridMesh mousePosition={mousePosition}/>
+                <MainBackgroundGridMesh mousePosition={mousePosition} initialAnimationFinished={initialAnimationFinished}/>
             </Canvas>
         </div>
     </div>

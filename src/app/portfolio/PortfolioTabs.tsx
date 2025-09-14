@@ -1,5 +1,5 @@
 import { useGSAP } from "@gsap/react";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 import PortfolioProfessionalContent from "./PortfolioProfessionalContent";
 import PortfolioEducationInfo from "./PortfolioEducationInfo";
@@ -9,7 +9,7 @@ import i18next from "../../intl/i18n";
 import styles from "./portfolio-styles.module.css"
 import gsap from "gsap";
 
-const PortfolioTabs = () => {
+const PortfolioTabs = ({setInitialAnimationFinished} : { setInitialAnimationFinished: Dispatch<SetStateAction<boolean>>}) => {
   const tabs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
   const [tabShown1, setTabShown1] = useState(false);
   const [tabShown2, setTabShown2] = useState(false);
@@ -26,7 +26,7 @@ const PortfolioTabs = () => {
     tabs.forEach((tab) => timeline.to(tab.current, { opacity: 1, duration: 0.5, ease: "steps(1)"}));
     ["25", "50", "75", "100"]
       .forEach(xPercent => timeline.to(tabsSlide.current, { xPercent, duration: 0.5, ease: "steps(1)"}));
-    timeline.set(tabsSlide.current, {opacity: 0});
+    timeline.set(tabsSlide.current, {opacity: 0, onComplete: () => setInitialAnimationFinished(true)});
 
   }, {scope: tabsContainer});
 

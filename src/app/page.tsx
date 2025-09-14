@@ -58,7 +58,7 @@ const InitialState = ({setAnimationCounter} : { setAnimationCounter: Dispatch<Se
   );
 }
 
-const AnimationInitialLoad = ({setAnimationCounter} : { setAnimationCounter: Dispatch<SetStateAction<number>> }) => {
+const AnimationInitialLoad = ({setAnimationCounter} : { setAnimationCounter: Dispatch<SetStateAction<number>>}) => {
   const grid: [number, number] = [20, 20];
   const gridElements = Array(grid[0])
         .fill(1)
@@ -111,18 +111,19 @@ const AnimationInitialLoad = ({setAnimationCounter} : { setAnimationCounter: Dis
     </div>
 }
 
-const PortfolioInfo = ({}) => {
+const PortfolioInfo = ({setInitialAnimationFinished}: { setInitialAnimationFinished: Dispatch<SetStateAction<boolean>>}) => {
   const [portfolioLoaded, setPortfolioLoaded] = useState(false);
 
   return <Container className={`${styles.portfolio} d-flex flex-column`} >
     <PortfolioHeader onComplete={() => setPortfolioLoaded(true)}/>
-    { portfolioLoaded && <PortfolioTabs /> }
+    { portfolioLoaded && <PortfolioTabs setInitialAnimationFinished={setInitialAnimationFinished}/> }
   </Container>
 }
 
 export default function Home() {
   const [animationCounter, setAnimationCounter] = useState(0);
   const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
+  const [initialAnimationFinished, setInitialAnimationFinished] = useState(false)
 
   useEffect(() => {
     const url = new URL(location.href);
@@ -138,8 +139,8 @@ export default function Home() {
   const animationElement = useMemo(() => { 
     const animations = [
     <InitialState setAnimationCounter={setAnimationCounter}/>,
-    <AnimationInitialLoad setAnimationCounter={setAnimationCounter}/>,
-    <PortfolioInfo />
+    <AnimationInitialLoad setAnimationCounter={setAnimationCounter} />,
+    <PortfolioInfo setInitialAnimationFinished={setInitialAnimationFinished}/>
   ];
 
     return animations[animationCounter]
@@ -149,7 +150,7 @@ export default function Home() {
   return <div 
     className={styles.mainPage} 
     onMouseMove={({clientX, clientY}) =>  setMousePosition(() => ({x: clientX, y: clientY}))}>
-      <MainBackground mousePosition={mousePosition}/>
+      <MainBackground mousePosition={mousePosition} initialAnimationFinished={initialAnimationFinished}/>
       {animationElement}
     </div>
 }
