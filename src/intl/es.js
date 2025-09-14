@@ -34,7 +34,7 @@ const es = {
         "professional.p1.business": "Serquo",
         "professional.p1.position": "Desarrollador Fullstack",
         "professional.p1.description.1": "Proyecto en cliente en su herramienta web de virtualización de datos.",
-        "professional.p1.description.2": "Aparte de desarrollo software, también realiza revisiones de código, tests de integración de código y análisis de features.",
+        "professional.p1.description.2": "Aparte de desarrollo software, también realiza revisiones de código, tests de integración y análisis de features.",
 
         "professional.p2.business": "Addentra Internet",
         "professional.p2.position": "Desarrollador Fullstack",
