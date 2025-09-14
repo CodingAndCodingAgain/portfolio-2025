@@ -4,12 +4,13 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import styles from "./page.module.css";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
 import { RoughEase, ScrambleTextPlugin, InertiaPlugin, Draggable } from "gsap/all";
 import { Container } from "react-bootstrap";
 import i18next from "../intl/i18n";
 import PortfolioHeader from "./portfolio/PortfolioHeader";
 import PortfolioTabs from "./portfolio/PortfolioTabs";
+import MainBackground from "./background/MainBackground";
 
 gsap.registerPlugin(useGSAP, ScrambleTextPlugin, InertiaPlugin, Draggable);
 
@@ -121,11 +122,7 @@ const PortfolioInfo = ({}) => {
 
 export default function Home() {
   const [animationCounter, setAnimationCounter] = useState(0);
-  const animations = [
-    <InitialState setAnimationCounter={setAnimationCounter}/>,
-    <AnimationInitialLoad setAnimationCounter={setAnimationCounter}/>,
-    <PortfolioInfo />
-  ];
+  const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
 
   useEffect(() => {
     const url = new URL(location.href);
@@ -136,8 +133,23 @@ export default function Home() {
       url.searchParams.set("lng", language);
       location.href = url.toString(); // reload page with added flag
     }
-  }, [])
+  }, []);
+
+  const animationElement = useMemo(() => { 
+    const animations = [
+    <InitialState setAnimationCounter={setAnimationCounter}/>,
+    <AnimationInitialLoad setAnimationCounter={setAnimationCounter}/>,
+    <PortfolioInfo />
+  ];
+
+    return animations[animationCounter]
+  }, [animationCounter])
   
 
-  return <div className={styles.mainPage}>{animations[animationCounter]}</div>
+  return <div 
+    className={styles.mainPage} 
+    onMouseMove={({clientX, clientY}) =>  setMousePosition(() => ({x: clientX, y: clientY}))}>
+      <MainBackground mousePosition={mousePosition}/>
+      {animationElement}
+    </div>
 }

@@ -1,9 +1,10 @@
 .mainPage {
-  background-color: black;
+  background-color: transparent;
   min-height: 100vh;
   * {
-    background-color: black;
+    background-color: transparent;
   }
+  z-index: 1;
 }
 
 .page {
@@ -57,6 +58,7 @@
 .portfolio {
   min-height: 100vh;
   height: auto !important;
+  background-color: rgba(0, 0, 0, .5);
 
   * {
     color: #00FF00;
