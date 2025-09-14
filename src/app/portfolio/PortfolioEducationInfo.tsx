@@ -34,7 +34,7 @@ const PortfolioEducationInfo = () => {
           )   
         }
       </Col>
-      <Col md={5} className="d-md-block d-sm-none">
+      <Col md={5} className="d-md-block d-none">
        <PortfolioEducationModel position={position}/>
       </Col>
     </Row>
