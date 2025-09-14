@@ -10,7 +10,7 @@ import styles from "./portfolio-styles.module.css"
 import gsap from "gsap";
 
 const PortfolioTabs = ({setInitialAnimationFinished} : { setInitialAnimationFinished: Dispatch<SetStateAction<boolean>>}) => {
-  const tabs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
+  const tabs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
   const [tabShown1, setTabShown1] = useState(false);
   const [tabShown2, setTabShown2] = useState(false);
   const [tabShown3, setTabShown3] = useState(false);
@@ -46,6 +46,14 @@ const PortfolioTabs = ({setInitialAnimationFinished} : { setInitialAnimationFini
             <Nav.Item ref={tabs[3]} className={styles.tabHeader} onClick={() => setTabShown4(true)}>
               <Nav.Link eventKey="tech">{i18next.t("tech.header")}</Nav.Link>
             </Nav.Item>
+            <Nav.Link 
+              ref={tabs[4]} 
+              className={styles.tabHeader} 
+              href="https://www.linkedin.com/in/jos%C3%A9-rom%C3%A1n-018566233" 
+              target="_blank" 
+              rel="noopener noreferrer">
+              {i18next.t("go.linkedin")}
+            </Nav.Link>
           </Nav>
         </Col>
         <Col sm={12} className={`d-flex flex-fill w-100 min-h-100 ${styles.tabContentCol}`}>

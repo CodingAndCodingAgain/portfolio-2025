@@ -28,7 +28,18 @@
   font-size:medium;
 }
 
+.tabHeader {
+  margin-bottom: 0% !important;
+  border-radius: 0% !important;
+  font-size:medium;
+}
+
 .tabHeader > a:hover {
+  border-color: #00FF00 !important;
+  color: #00FF00;
+}
+
+.tabHeader:hover {
   border-color: #00FF00 !important;
   color: #00FF00;
 }

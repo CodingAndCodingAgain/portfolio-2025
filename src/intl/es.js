@@ -43,7 +43,9 @@ const es = {
 
         "enter": "ACCESO",
 
-        "dragAndDrop": "¡Arrastra aqui lo que necesites!"
+        "dragAndDrop": "¡Arrastra aqui lo que necesites!",
+
+        "go.linkedin": "LinkedIn"
     }
 } 
 
