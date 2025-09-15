@@ -14,7 +14,7 @@ const en = {
 
         "languages": "Languages",
         "frameworks": "Frameworks",
-        "os": "Operationg Systems",
+        "os": "Operating Systems",
         "virtualization": "Virtualization Software",
         "databases": "Databases",
         "devops": "DevOps",
