@@ -27,7 +27,7 @@ const PortfolioTechnicalSkillsInfo = () => {
       {name: "AWS S3", level: 1}, {name: "AWS Route53", level: 1}, {name: "AWS EC2", level: 1}, {name: "Jenkins", level: 1}
     ],
     utilities: [
-      {name: "Git", level: 3}, {name: "VSCode", level: 2}, {name: "IntellijIDEA", level: 2}, {name: "DBeaver", level: 1},
+      {name: "Git", level: 3}, {name: "VSCode", level: 2}, {name: "IntelliJ IDEA", level: 2}, {name: "DBeaver", level: 1},
       {name: "MySQL Workbench", level: 1}, {name: "CMD", level: 1}, {name: "Bash", level: 2}, 
     ],
     methodologies: [{ name: "Scrum", level: 3}]
